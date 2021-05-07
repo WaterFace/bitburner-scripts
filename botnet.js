@@ -8,7 +8,7 @@ export async function main(ns) {
 
   // this is slightly inefficient, because the hack script uses slightly less ram
   // but this makes the math easier
-  var ramPerScript = Math.max(ns.getScriptRam("wait-grow.ns"), ns.getScriptRam("wait-hack.ns"), ns.getScriptRam("wait-weak.ns"));
+  var ramPerScript = Math.max(ns.getScriptRam("wait-grow.js"), ns.getScriptRam("wait-hack.js"), ns.getScriptRam("wait-weak.js"));
   // all the servers to which we have root access
   // by default, it searches from `home`
   var allServers = getServersWithRootAccess(ns);
@@ -29,6 +29,6 @@ export async function main(ns) {
     const weakenPerThread = 0.05;
 
     var threadsNeeded = Math.ceil((curSec - minSec)/weakenPerThread);
-    ns.print("Need " + threadsNeeded + " threads out of " + availableThreads + " to reduce security to minimum");
+    ns.tprint("Need " + threadsNeeded + " threads out of " + availableThreads + " to reduce security to minimum");
   }
 }
