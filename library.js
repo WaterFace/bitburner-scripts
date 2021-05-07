@@ -21,7 +21,7 @@ export function getServersWithRootAccess(ns, start = "home") {
 //     return Math.max(1, Math.round(ns.getServerBaseSecurityLevel(server)));
 // }
 
-function useableRam(ns, servers, ramUsage = 1) {
+export function useableRam(ns, servers, ramUsage = 1) {
     var totalRam = 0;
     for (const server of servers) {
         var ram = ns.getServerMaxRam(server) - ns.getServerUsedRam(server);
