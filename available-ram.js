@@ -1,4 +1,4 @@
-import { getServersWithRootAccess, useableRam } from "library.ns";
+import { getServersWithRootAccess, useableRam } from "library.js";
 
 export async function main(ns) {
     var servers = getServersWithRootAccess(ns);

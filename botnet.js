@@ -1,4 +1,4 @@
-import { getServersWithRootAccess, useableRam } from "library.ns";
+import { getServersWithRootAccess, useableRam } from "library.js";
 
 export async function main(ns) {
   if (!ns.fileExists("wait-grow.ns") || !ns.fileExists("wait-hack.ns") || !ns.fileExists("wait-weak.ns")) {
