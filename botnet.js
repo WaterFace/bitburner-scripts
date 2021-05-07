@@ -1,8 +1,8 @@
 import { getServersWithRootAccess, useableRam } from "library.js";
 
 export async function main(ns) {
-  if (!ns.fileExists("wait-grow.ns") || !ns.fileExists("wait-hack.ns") || !ns.fileExists("wait-weak.ns")) {
-    ns.tprint("This server needs to have access to the `wait-grow.ns`, `wait-hack.ns`, and `wait-weak.ns` scripts.");
+  if (!ns.fileExists("wait-grow.js") || !ns.fileExists("wait-hack.js") || !ns.fileExists("wait-weak.js")) {
+    ns.tprint("This server needs to have access to the `wait-grow.js`, `wait-hack.js`, and `wait-weak.js` scripts.");
     return;
   }
 
