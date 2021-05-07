@@ -13,12 +13,16 @@ export async function main(ns) {
   // by default, it searches from `home`
   var allServers = getServersWithRootAccess(ns);
   var availableRam = useableRam(ns, allServers, ramPerScript);
-  var availableThreads = availableRam / ramPerScript;
+  var availableThreads = useableThreads(ns, allServers, ramPerScript);
 
   // for now, just `foodnstuff`
-  var targets = ["foodnstuff"];
+  var targets = allServers; ["foodnstuff"];
 
+  ns.tprint("Weakening all targets to zero.");
   for (const target of targets) {
+    availableRam = useableRam(ns, allServers, ramPerScript);
+    availableThreads = useableThreads(ns, allServers, ramPerScript);
+
     // first, weaken to zero
     var curSec = ns.getServerSecurityLevel(target);
     var minSec = ns.getServerMinSecurityLevel(target);
@@ -28,7 +32,27 @@ export async function main(ns) {
     // later in the game or something
     const weakenPerThread = 0.05;
 
+    ns.tprint(target + ":");
     var threadsNeeded = Math.ceil((curSec - minSec)/weakenPerThread);
     ns.tprint("Need " + threadsNeeded + " threads out of " + availableThreads + " to reduce security to minimum");
+
+    await runBotScript(ns, "wait-weak.js", target, 0, allServers, threadsNeeded, ramPerScript);
   }
+}
+
+async function runBotScript(ns, script, target, delay, servers, threads, ramPerScript) {
+  var toRun = threads;
+
+  for (const server of servers) {
+    if (toRun <= 0) { break; }
+    var availableThreads = Math.floor((ns.getServerMaxRam(server) - ns.getServerUsedRam(server)) / ramPerScript);
+    availableThreads = Math.min(availableThreads, toRun);
+    await ns.exec(script, server, availableThreads, target, delay);
+    toRun -= availableThreads;
+  }
+  // return 0 if we were able to run
+  // with all the necessary threads,
+  // and the remaining threads to run
+  // otherwise
+  return toRun;
 }

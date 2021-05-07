@@ -30,3 +30,13 @@ export function useableRam(ns, servers, ramUsage = 1) {
     }
     return totalRam;
 }
+
+export function useableThreads(ns, servers, ramUsage = 1) {
+    var totalThreads = 0;
+    for (const server of servers) {
+        var ram = ns.getServerMaxRam(server) - ns.getServerUsedRam(server);
+        var n = Math.floor(ram / ramUsage);
+        totalThreads += n;
+    }
+    return totalThreads;
+}
