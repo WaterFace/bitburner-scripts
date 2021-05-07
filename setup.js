@@ -3,6 +3,6 @@ export async function main(ns) {
   var prefix = "https://raw.githubusercontent.com/WaterFace/bitburner-scripts/master/";
 
   files.forEach(function(filename) {
-    ns.wget(prefix + filename, filename);
+    await ns.wget(prefix + filename, filename);
   });
 }
